@@ -12,11 +12,8 @@
 {% block content %}
     {% from "bootstrap5/form.html" import render_form %}
     <div class="container">
-        <h1>Create morse code!</h1>
+        <h1>Template webapp</h1>
 
         {{ render_form(form, novalidate=True, button_map={"submit": "primary"}) }}
-
-        <h2>In Morse Code:</h2>
-        <pre>{{ encoded }}</pre>
     </div>
 {% endblock %}
