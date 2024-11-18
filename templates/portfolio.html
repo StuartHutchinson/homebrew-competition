@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}
+    <title>Crypto Tools</title>
+{% endblock %}
+
+{% block meta %}
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+{% endblock %}
+
+{% block content %}
+    {% from "bootstrap5/form.html" import render_form %}
+    <div class="container">
+        <h1>Crypto Portfolio</h1>
+        <button type="button" onclick="showPurchaseForm()">Add Crypto</button>
+
+        <div id="purchase-form" style="display: none">
+        {{ render_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+        </div>
+
+        {% if portfolio_dict|length > 0 %}
+            {% for key, value in portfolio_dict.items() %}
+            <h2>{{ key }}:</h2>
+            <p>Current value: {{ value.current_value() }}</p>
+            {% endfor %}
+        {% else %}
+            <p>Your crypto portfolio is empty.</p>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script type="text/javascript">
+    function showPurchaseForm() {
+        var node = document.getElementById('purchase-form');
+        node.style.display = 'block';
+    }
+</script>
+{% endblock %}
