@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-    <title>Morse Code</title>
+    <title>Crypto Tools</title>
 {% endblock %}
 
 {% block meta %}
@@ -12,8 +12,12 @@
 {% block content %}
     {% from "bootstrap5/form.html" import render_form %}
     <div class="container">
-        <h1>Template webapp</h1>
+        <h1>Crypto Price Checker</h1>
 
         {{ render_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+
+        {% if asset %}
+        <p>Current price for {{ asset }} is £{{ price }}</p>
+        {% endif %}
     </div>
 {% endblock %}
