@@ -13,20 +13,13 @@
     {% from "bootstrap5/form.html" import render_form %}
     <div class="container">
         <h1>Crypto Portfolio</h1>
-        <button type="button" onclick="showPurchaseForm()">Add Crypto</button>
+        <button class="btn btn-primary" type="button" onclick="showPurchaseForm()">Add Crypto</button>
 
         <div id="purchase-form" style="display: none">
         {{ render_form(form, novalidate=True, button_map={"submit": "primary"}) }}
         </div>
 
-        {% if portfolio_dict|length > 0 %}
-            {% for key, value in portfolio_dict.items() %}
-            <h2>{{ key }}:</h2>
-            <p>Current value: {{ value.current_value() }}</p>
-            {% endfor %}
-        {% else %}
-            <p>Your crypto portfolio is empty.</p>
-        {% endif %}
+        {{ portfolio.to_html()|safe }}
     </div>
 {% endblock %}
 

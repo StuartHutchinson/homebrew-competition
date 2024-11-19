@@ -263,9 +263,9 @@ h6 {
 
 .navmenu ul {
   list-style: none;
-  padding: 0 0 20px 0;
   margin: 0;
   display: flex;
+  line-height: 30px;
 }
 
 .navmenu a,
@@ -1284,4 +1284,19 @@ pre {
 
 .page-content {
     padding-top: 100px;
+}
+
+table {
+    border: 2px solid;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th {
+    border: 2px solid;
+    width: 150px;
+}
+
+td {
+    border: 1px solid;
 }

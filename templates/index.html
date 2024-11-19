@@ -16,8 +16,6 @@
 
         {{ render_form(form, novalidate=True, button_map={"submit": "primary"}) }}
 
-        {% if asset %}
-        <p>Current price for {{ asset }} is £{{ price }}</p>
-        {% endif %}
+        <pre>{{ price_str }}</pre>
     </div>
 {% endblock %}
