@@ -6,51 +6,32 @@ CRYPTO_LIST = [
 	("SOL", "Solana"),
 ]
 
-class UserPortfolio():
-    assets = {}
+class AssetPurchase:
+    """Represents the purchase of an asset
+    asset - what asset was purchased eg BTC
+    amount - how many of the asset were purchased
+    gbp - how much the purchase cost
+    purchase_price - the current price of one the assets at the time of purchase.
+    gbp = amount * purchase_price"""
+    def __init__(self, asset, amount, gbp, purchase_price):
+        self.asset = asset
+        self.amount = amount
+        self.gbp = gbp
+        self.purchase_price = purchase_price
 
-    def get_asset(self, asset):
-        if asset in self.assets:
-            return self.assets[asset]
-        return None
-
-    def add_asset(self, portfolio_item):
-        asset = portfolio_item.asset
-        self.assets[asset] = portfolio_item
-
-    def to_html(self):
-        html = ("<table><tr>"
-                "<th>Asset</th>"
-                "<th>Total Cost</th>"
-                "<th>Current Value</th>"
-                "<th>Profit/Loss</th></tr>"
-                )
-        for asset, portfolio_asset in self.assets.items():
-            html += portfolio_asset.to_html()
-        html += "</table>"
-        return html
-
-portfolio = UserPortfolio()
-
-def add_asset(form):
-    asset = form.asset.data
-    item = portfolio.get_asset(asset)
-    if not item:
-        item = PortfolioAsset(asset)
-        portfolio.add_asset(item)
-    item.add_purchase(form)
-
-class PortfolioAsset():
+class PortfolioAsset:
+    """The amount of a given asset that is in the portfolio. Simply an asset (eg BTC) along with a list of AssetPurchases"""
     def __init__(self, asset):
         self.asset = asset
         self.purchases = []
 
-    def add_purchase(self, form):
-        asset = form.asset.data
-        purchase_price = form.purchase_price.data
-        gbp = form.gbp.data
+    def add_purchase(self, asset, gbp, purchase_price):
+        """
+        :param asset: what asset was purchased
+        :param gbp: cost of the purchase in GBP
+        :param purchase_price: the market rate at the time of the purchase
+        """
         crypto_amount = gbp / purchase_price
-
         purchase = AssetPurchase(asset, crypto_amount, gbp, purchase_price)
         self.purchases.append(purchase)
 
@@ -95,10 +76,50 @@ class PortfolioAsset():
                 )
         return html
 
+class UserPortfolio:
+    """A class to represent the crypto assets a user has purchased.
+    Simply contains a dict portfolio_assets which maps from the asset (eg BTC) to the PortfolioAsset"""
+    portfolio_assets = {}
 
-class AssetPurchase():
-    def __init__(self, asset, amount, gbp, purchase_price):
-        self.asset = asset
-        self.amount = amount
-        self.gbp = gbp
-        self.purchase_price = purchase_price
+    def get_asset(self, asset) -> PortfolioAsset:
+        if asset in self.portfolio_assets:
+            return self.portfolio_assets[asset]
+        return None
+
+    def add_asset(self, portfolio_asset):
+        asset = portfolio_asset.asset
+        self.portfolio_assets[asset] = portfolio_asset
+
+    def to_html(self):
+        html = ("<table><tr>"
+                "<th>Asset</th>"
+                "<th>Total Cost</th>"
+                "<th>Current Value</th>"
+                "<th>Profit/Loss</th></tr>"
+                )
+        for asset, portfolio_asset in self.portfolio_assets.items():
+            html += portfolio_asset.to_html()
+        html += "</table>"
+        return html
+
+def add_asset(form):
+    asset = form.asset.data
+    portfolio_item = portfolio.get_asset(asset)
+    if not portfolio_item:
+        portfolio_item = PortfolioAsset(asset)
+        portfolio.add_asset(portfolio_item)
+
+    asset = form.asset.data
+    purchase_price = form.purchase_price.data
+    gbp = form.gbp.data
+    portfolio_item.add_purchase(asset, gbp, purchase_price)
+
+def add_test_data(portfolio, asset, gbp, price):
+    portfolio_asset = PortfolioAsset(asset)
+    portfolio.add_asset(portfolio_asset)
+    portfolio_asset.add_purchase(purchase_price=price, gbp=gbp, asset=asset)
+
+portfolio = UserPortfolio()
+#initialise with test data
+add_test_data(portfolio, "BTC", 100, 45000)
+add_test_data(portfolio, "ETH", 80, 2000)
