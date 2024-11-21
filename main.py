@@ -19,6 +19,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ["FLASK_KEY"]
 
 app.config.from_object(db.Config)
+#
 db.db.init_app(app)
 data_manager.app = app
 
@@ -26,6 +27,10 @@ bootstrap = Bootstrap5(app)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
+
+with app.app_context():
+	data_manager.db.create_all()
+
 @login_manager.user_loader
 def get_user_for_id(user_id):
 	return data_manager.get_user_for_id(user_id)
@@ -88,6 +93,3 @@ def logout():
 
 if __name__ == "__main__":
 	app.run(debug=True)
-
-with app.app_context():
-	data_manager.db.create_all()
