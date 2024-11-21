@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}
+    <title>Crypto Tools</title>
+{% endblock %}
+
+{% block meta %}
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+{% endblock %}
+
+{% block content %}
+    {% from "bootstrap5/form.html" import render_form %}
+    <div class="container">
+        <h1>Login to create and monitor your own portfolio</h1>
+
+        {{ render_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+    </div>
+{% endblock %}

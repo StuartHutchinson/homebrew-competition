@@ -1,17 +1,32 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, SelectField
 from wtforms.fields.choices import SelectMultipleField
+from wtforms.fields.datetime import DateField
 from wtforms.fields.numeric import FloatField
+from wtforms.fields.simple import PasswordField
 from wtforms.validators import DataRequired
 
-from portfolio import CRYPTO_LIST
+from data import data_manager
+
 
 class PriceCheckForm(FlaskForm):
-    assets = SelectMultipleField("Select asset(s)", choices=CRYPTO_LIST)
+    assets = SelectMultipleField("Select asset(s)", choices=data_manager.CRYPTO_LIST)
     submit = SubmitField("Check Prices")
 
 class PurchaseForm(FlaskForm):
-    asset = SelectField("Select asset", choices=CRYPTO_LIST, validators=[DataRequired()])
-    purchase_price = FloatField("Asset price", validators=[DataRequired()])
+    asset = SelectField("Select asset", choices=data_manager.CRYPTO_LIST, validators=[DataRequired()])
+    date = DateField("Purchase date")
+    price = FloatField("Asset price", validators=[DataRequired()])
     gbp = FloatField("Purchase price £")
+    fees = FloatField("Fees £")
     submit = SubmitField("Add")
+
+class RegisterForm(FlaskForm):
+    username = StringField("Username", validators=[DataRequired()])
+    password = PasswordField("Password", validators=[DataRequired()])
+    submit = SubmitField("Register")
+
+class LoginForm(FlaskForm):
+    username = StringField("Username", validators=[DataRequired()])
+    password = PasswordField("Password", validators=[DataRequired()])
+    submit = SubmitField("Log In")

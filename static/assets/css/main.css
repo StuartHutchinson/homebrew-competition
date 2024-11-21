@@ -259,6 +259,7 @@ h6 {
   padding: 0;
   z-index: 9997;
   display: flex;
+  width: 100%;
 }
 
 .navmenu ul {
@@ -267,9 +268,20 @@ h6 {
   display: flex;
   line-height: 30px;
 }
+/*
+.navmenu div ul {
+  padding: 18px 15px 10px 10px;
+  display: flex;
+  margin-bottom: 0px;
+}*/
+
+.navmenu .user-details {
+    align: right;
+}
 
 .navmenu a,
-.navmenu a:focus {
+.navmenu a:focus,
+.navmenu p {
   color: var(--nav-color);
   padding: 15px 10px;
   font-family: var(--nav-font);

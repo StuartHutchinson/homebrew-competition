@@ -1,10 +1,11 @@
-Flask==3.0.3; python_version > '3.6'
-Flask==2.3.3; python_version < '3.7'
-Werkzeug==3.0.3; python_version > '3.6'
-Werkzeug==2.3.7; python_version < '3.7'
+Flask==3.0.3
 gunicorn==22.0.0
 WTForms==3.2.1
 Flask-WTF==1.2.2
 Bootstrap-Flask==2.4.1
 python-dotenv==1.0.1
 coinbase==2.1.0
+Flask-SQLAlchemy==3.1.1
+SQLAlchemy==2.0.36
+Flask-Login==0.6.3
+Werkzeug==3.1.3

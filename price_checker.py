@@ -1,8 +1,5 @@
 import os
 
-from dotenv import load_dotenv
-load_dotenv()
-
 from coinbase.wallet.client import Client as CoinbaseClient
 cb_client = CoinbaseClient(os.environ["COINBASE_API_KEY"] , os.environ["COINBASE_SECRET"])
 

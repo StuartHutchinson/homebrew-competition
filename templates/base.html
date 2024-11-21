@@ -36,11 +36,25 @@
         <header id="header" class="header dark-background d-flex">
 <!--            <i class="header-toggle d-xl-none bi bi-list"></i>-->
             <nav id="navmenu" class="navmenu">
-              <ul>
-                <li><a href="https://stuarthutchinson.github.io/" class="active"><i class="bi bi-house navicon"></i>Home</a></li>
-                <li><a href="{{ url_for('index') }}" class="active">Price Checker</a></li>
-                <li><a href="{{ url_for('show_portfolio') }}" class="active">Portfolio</a></li>
-              </ul>
+                <ul class="me-auto p2">
+                  <li><a href="https://stuarthutchinson.github.io/" class="active"><i class="bi bi-house navicon"></i>Home</a></li>
+                  <li><a href="{{ url_for('index') }}" class="active">Price Checker</a></li>
+                  <li><a href="{{ url_for('show_portfolio') }}" class="active">Portfolio</a></li>
+                </ul>
+                <div>
+                    {% if current_user.is_authenticated %}
+                        <ul>
+                            <li><p>Hi {{ current_user.username }}!</p></li>
+                            <li><a href="{{ url_for('logout') }}" class="active">Logout</a></li>
+                        </ul>
+                    {% else %}
+                        <ul>
+                            <li><p>Hi Guest!</p></li>
+                            <li><a href="{{ url_for('register') }}" class="active">Register</a></li>
+                            <li><a href="{{ url_for('login') }}" class="active">Login</a></li>
+                        </ul>
+                    {% endif %}
+                </div>
             </nav>
         </header>
 
