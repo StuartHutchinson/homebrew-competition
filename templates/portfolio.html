@@ -19,11 +19,9 @@
         {% endif %}
 
         <div class="portfolio-totals">
-            <span>
-                <strong>Total Profit: </strong><strong style='color:{{ portfolio.profit_color() }}'>{{ portfolio.format_currency(portfolio.total_profit()) }}</strong><br>
-                <strong>Total Invested: </strong>{{ portfolio.format_currency(portfolio.total_cost()) }}<br>
-                <strong>Current Value: </strong>{{ portfolio.format_currency(portfolio.total_value()) }}<br>
-            </span>
+            <strong>Total Profit: </strong><strong style='color:{{ portfolio.profit_color() }}'>{{ portfolio.format_currency(portfolio.total_profit()) }}</strong><br>
+            <strong>Total Invested: </strong>{{ portfolio.format_currency(portfolio.total_cost()) }}<br>
+            <strong>Current Value: </strong>{{ portfolio.format_currency(portfolio.total_value()) }}<br>
         </div>
 
         {{ portfolio.to_html()|safe }}
