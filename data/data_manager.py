@@ -7,15 +7,6 @@ from entities import User, AssetPurchase
 
 app: Flask #this is set in main.py when initialising
 
-CRYPTO_LIST = [
-	("BTC", "Bitcoin"),
-	("ETH", "Ethereum"),
-	("USDT", "Tether"),
-	("SOL", "Solana"),
-	("ADA", "Cardano"),
-	("DOGE", "Dogecoin"),
-]
-
 def save(entity):
     with app.app_context():
         db.session.add(entity)
@@ -35,7 +26,3 @@ def create_and_login_user(form):
         db.session.commit()
         print(f"Registered new user <{user.id}>")
         login_user(user)
-
-def get_purchases_for_user(user_id):
-    with app.app_context():
-        return db.session.execute(db.select(AssetPurchase).where(AssetPurchase.owner_id == user_id)).scalars().all()

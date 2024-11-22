@@ -6,8 +6,6 @@ from werkzeug.security import check_password_hash
 from dotenv import load_dotenv
 load_dotenv()
 
-import portfolio
-import price_checker
 from flask import Flask, render_template, redirect, url_for, flash
 import forms
 from data import data_manager, db
@@ -37,27 +35,7 @@ def get_user_for_id(user_id):
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-	form = forms.PriceCheckForm()
-	prices = []
-	if form.validate_on_submit():
-		assets = form.assets.data
-		prices.append("Current Prices:\n")
-		for asset in assets:
-			price = price_checker.get_asset_price(asset)
-			prices.append(f"{asset} - £{'{:.2f}'.format(price)}\n")
-	return render_template("index.html", form=form, prices=prices)
-
-@app.route("/portfolio", methods=["GET", "POST"])
-def show_portfolio():
-	form = forms.PurchaseForm()
-	current_user_portfolio = portfolio.get_current_user_portfolio()
-	if form.validate_on_submit():
-		purchase = data_manager.AssetPurchase.create_from_form(form)
-		current_user_portfolio.add_purchase(purchase)
-		if current_user.is_authenticated:
-			data_manager.save(purchase)
-		current_user_portfolio = portfolio.get_current_user_portfolio() #reload from the database after the connection has been closed
-	return render_template("portfolio.html", form=form, portfolio=current_user_portfolio)
+	return render_template("index.html")
 
 @app.route('/register', methods=["POST", "GET"])
 def register():
@@ -69,7 +47,7 @@ def register():
 			return redirect(url_for("login"))
 
 		data_manager.create_and_login_user(form)
-		return redirect(url_for("show_portfolio"))
+		return redirect(url_for("index"))
 	return render_template("register.html", form=form)
 
 @app.route('/login', methods=["POST","GET"])
@@ -80,7 +58,7 @@ def login():
 		if user:
 			if check_password_hash(user.password, form.password.data):
 				login_user(user)
-				return redirect(url_for("show_portfolio"))
+				return redirect(url_for("index"))
 			else:
 				flash("Incorrect Password")
 		else:
@@ -90,7 +68,7 @@ def login():
 @app.route('/logout')
 def logout():
 	logout_user()
-	return redirect(url_for('show_portfolio'))
+	return redirect(url_for('index'))
 
 if __name__ == "__main__":
 	app.run(debug=True)

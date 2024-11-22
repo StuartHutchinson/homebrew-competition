@@ -1,7 +1,6 @@
 import os
 
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import create_engine
 from sqlalchemy.orm import DeclarativeBase
 from google.cloud.sql.connector import Connector
 
@@ -34,9 +33,6 @@ def get_database_url():
                    os.environ["DATABASE_NAME"])
     else:
         url_str = "postgresql+pg8000://"
-        # host_and_port = f"/cloudsql/{os.getenv('CLOUD_SQL_CONNECTION_NAME')}"
-        # host_and_port = os.environ['CLOUD_SQL_CONNECTION_NAME']
-        # user_str = os.environ["DATABASE_USER"] #no password needed when using google service accounts
 
     print(f"environment is '{environment}', using SQLALCHEMY_DATABASE_URI = {url_str}")
     return url_str
