@@ -14,8 +14,14 @@
     <div class="container">
         <h1>Crypto Price Checker</h1>
 
-        {{ render_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+        <div class="price-checker">
+            {{ render_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+        </div>
 
-        <pre>{{ price_str }}</pre>
+        <div class="current-prices">
+        {% for price_str in prices: %}
+            <p>{{ price_str }}</p>
+        {% endfor %}
+        </div>
     </div>
 {% endblock %}

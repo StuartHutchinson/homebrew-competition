@@ -38,13 +38,14 @@ def get_user_for_id(user_id):
 @app.route("/", methods=["GET", "POST"])
 def index():
 	form = forms.PriceCheckForm()
-	price_str="Current prices:\n"
+	prices = []
 	if form.validate_on_submit():
 		assets = form.assets.data
+		prices.append("Current Prices:\n")
 		for asset in assets:
 			price = price_checker.get_asset_price(asset)
-			price_str += f"{asset} - £{'{:.2f}'.format(price)}\n"
-	return render_template("index.html", form=form, price_str=price_str)
+			prices.append(f"{asset} - £{'{:.2f}'.format(price)}\n")
+	return render_template("index.html", form=form, prices=prices)
 
 @app.route("/portfolio", methods=["GET", "POST"])
 def show_portfolio():

@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, SelectField
+from wtforms import widgets, StringField, SubmitField, SelectField
 from wtforms.fields.choices import SelectMultipleField
 from wtforms.fields.datetime import DateField
 from wtforms.fields.numeric import FloatField
@@ -8,9 +8,12 @@ from wtforms.validators import DataRequired
 
 from data import data_manager
 
+class MultiCheckboxField(SelectMultipleField):
+    widget = widgets.ListWidget(prefix_label=False)
+    option_widget = widgets.CheckboxInput()
 
 class PriceCheckForm(FlaskForm):
-    assets = SelectMultipleField("Select asset(s)", choices=data_manager.CRYPTO_LIST)
+    assets = MultiCheckboxField("Select asset(s)", choices=data_manager.CRYPTO_LIST)
     submit = SubmitField("Check Prices")
 
 class PurchaseForm(FlaskForm):
