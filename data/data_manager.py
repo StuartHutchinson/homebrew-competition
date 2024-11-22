@@ -10,7 +10,10 @@ app: Flask #this is set in main.py when initialising
 CRYPTO_LIST = [
 	("BTC", "Bitcoin"),
 	("ETH", "Ethereum"),
+	("USDT", "Tether"),
 	("SOL", "Solana"),
+	("ADA", "Cardano"),
+	("DOGE", "Dogecoin"),
 ]
 
 def save(entity):

@@ -12,7 +12,11 @@
 {% block content %}
     {% from "bootstrap5/form.html" import render_form %}
     <div class="container">
-        <h1>Crypto Portfolio</h1>
+        {% if current_user.is_authenticated %}
+            <h1>{{ current_user.username }}'s Portfolio</h1>
+        {% else %}
+            <h1>Guest Portfolio</h1>
+        {% endif %}
         <button class="btn btn-primary add-purchase" type="button">Add Purchase</button>
 
 <!--        <div id="purchase-form" style="display: none">-->
