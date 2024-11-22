@@ -17,13 +17,20 @@
         {% else %}
             <h1>Guest Portfolio</h1>
         {% endif %}
-<!--        <button class="btn btn-primary add-purchase" type="button">Add Purchase</button>-->
-        <a class="add-purchase" href="#">Add Purchase</a>
 
-        <div id="purchase-form" class="d-none">
-        {{ render_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+        <div class="portfolio-totals">
+            <span>
+                <strong>Total Profit: </strong><strong style='color:{{ portfolio.profit_color() }}'>{{ portfolio.format_currency(portfolio.total_profit()) }}</strong><br>
+                <strong>Total Invested: </strong>{{ portfolio.format_currency(portfolio.total_cost()) }}<br>
+                <strong>Current Value: </strong>{{ portfolio.format_currency(portfolio.total_value()) }}<br>
+            </span>
         </div>
 
         {{ portfolio.to_html()|safe }}
+
+        <a class="add-purchase" href="#">Add Purchase</a>
+        <div id="purchase-form" class="d-none">
+        {{ render_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+        </div>
     </div>
 {% endblock %}

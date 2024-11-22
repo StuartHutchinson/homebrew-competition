@@ -42,8 +42,8 @@ class UserPortfolio:
         self.portfolio_assets = {} #asset: list[AssetPurchases]
 
     def write_asset_html(self, asset):
-        cost = self.total_cost(asset)
-        value = self.current_value(asset)
+        cost = self.total_cost_of_asset(asset)
+        value = self.current_value_of_asset(asset)
         color = get_render_color(cost, value)
 
         html = (f"<tr><td>{asset}</td>"
@@ -72,18 +72,18 @@ class UserPortfolio:
             self.portfolio_assets[asset] = []
         self.portfolio_assets[asset].append(purchase)
 
-    def current_value(self, asset, as_string: Boolean = False):
+    def current_value_of_asset(self, asset, as_string: Boolean = False):
         """What is the value of the given asset in this portfolio?
         Looks up the current price and calculates the total value of the held assets
         Can return a formatted string or a float depending on the as_string variable"""
         current_price = price_checker.get_asset_price(asset)
-        current_value = current_price * self.total_held(asset)
+        current_value = current_price * self.total_held_of_asset(asset)
         if as_string:
-            return '£{:.2f}'.format(current_value())
+            return self.format_currency(current_value())
         else:
             return current_value
 
-    def total_held(self, asset):
+    def total_held_of_asset(self, asset):
         """
         How many of the given asset are in the portfolio
         :param asset: The asset to check (e.g. BTC)
@@ -95,7 +95,7 @@ class UserPortfolio:
                 total += purchase.amount
         return total
 
-    def total_cost(self, asset):
+    def total_cost_of_asset(self, asset):
         """
         How much fiat has the user spent on the given asset?
         :param asset: the asset to check
@@ -107,3 +107,27 @@ class UserPortfolio:
             for purchase in purchases:
                 total += purchase.gbp_total
         return total
+
+    def total_cost(self):
+        """What is the total cost of the portfolio as a float"""
+        total = 0
+        for asset in self.portfolio_assets:
+            total += self.total_cost_of_asset(asset)
+        return total
+
+    def total_value(self):
+        """What is the total current value of all the assets in the portfolio as a float"""
+        total = 0
+        for asset in self.portfolio_assets:
+            total += self.current_value_of_asset(asset)
+        return total
+
+    def total_profit(self):
+        """How much is the portfolio up (or down)"""
+        return self.total_value() - self.total_cost()
+
+    def format_currency(self, currency: float) -> str:
+        return '£{:.2f}'.format(currency)
+
+    def profit_color(self):
+        return get_render_color(self.total_cost(), self.total_value())

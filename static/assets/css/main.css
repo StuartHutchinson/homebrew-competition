@@ -548,9 +548,9 @@ section,
     padding-top: 60px;
 }
 
-/*
- Price checker
- */
+/*-------------------------------------------------------------------
+    Price checker
+ --------------------------------------------------------------------*/
  .price-checker li {
     list-style-type: '';
  }
@@ -559,10 +559,14 @@ section,
     margin-top: 20px;
  }
 
+ /*-----------------------------------------------------
+    Portfolio
+ -----------------------------------------------------*/
+
 table {
     border: 2px solid;
     border-collapse: collapse;
-    margin-top: 10px;
+    margin: 10px 0px;
 }
 
 th {
