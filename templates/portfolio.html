@@ -13,22 +13,13 @@
     {% from "bootstrap5/form.html" import render_form %}
     <div class="container">
         <h1>Crypto Portfolio</h1>
-        <button class="btn btn-primary" type="button" onclick="showPurchaseForm()">Add Crypto</button>
+        <button class="btn btn-primary add-purchase" type="button">Add Purchase</button>
 
-        <div id="purchase-form" style="display: none">
+<!--        <div id="purchase-form" style="display: none">-->
+        <div id="purchase-form" class="d-none">
         {{ render_form(form, novalidate=True, button_map={"submit": "primary"}) }}
         </div>
 
         {{ portfolio.to_html()|safe }}
     </div>
-{% endblock %}
-
-{% block scripts %}
-{{ super() }}
-<script type="text/javascript">
-    function showPurchaseForm() {
-        var node = document.getElementById('purchase-form');
-        node.style.display = 'block';
-    }
-</script>
 {% endblock %}
