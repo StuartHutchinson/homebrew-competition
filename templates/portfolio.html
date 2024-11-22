@@ -17,9 +17,9 @@
         {% else %}
             <h1>Guest Portfolio</h1>
         {% endif %}
-        <button class="btn btn-primary add-purchase" type="button">Add Purchase</button>
+<!--        <button class="btn btn-primary add-purchase" type="button">Add Purchase</button>-->
+        <a class="add-purchase" href="#">Add Purchase</a>
 
-<!--        <div id="purchase-form" style="display: none">-->
         <div id="purchase-form" class="d-none">
         {{ render_form(form, novalidate=True, button_map={"submit": "primary"}) }}
         </div>
